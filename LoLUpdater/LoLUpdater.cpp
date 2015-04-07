@@ -302,7 +302,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		ei.cbSize = sizeof(SHELLEXECUTEINFO);
 		ei.fMask = SEE_MASK_NOCLOSEPROCESS;
 		ei.nShow = SW_SHOW;
-		if (MsiQueryProductState(L"{2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3}") != INSTALLSTATE_DEFAULT)
+		if (MsiQueryProductState(L"{13A4EE12-23EA-3371-91EE-EFB36DDFFF3E}") != INSTALLSTATE_DEFAULT)
 		{
 			wchar_t msvc[MAX_PATH + 1] = L"vcredist_x86";
 			wchar_t runmsvc[MAX_PATH + 1];
