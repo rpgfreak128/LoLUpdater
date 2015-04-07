@@ -417,14 +417,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		PAppend(flashlatest, newflash);
 		CpFile(flashlatest, flashdest);
 
-		RunAndWait(L"-silent", runair);
-		DeleteFile(runair);
-
-		PAppend(airlatest, adobedir);
-		PAppend(airlatest, air);
-		UnblockFile(airlatest);
-		CpFile(airlatest, airdest);
-
 		wchar_t cgbin[MAX_PATH + 1];
 		PCombine(cgbin, cgbinpath, cg);
 		CpFile(cgbin, cgdest);
@@ -436,6 +428,14 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		wchar_t cgD3D9bin[MAX_PATH + 1];
 		PCombine(cgD3D9bin, cgbinpath, cgD3D9);
 		CpFile(cgD3D9bin, cgD3D9dest);
+
+		RunAndWait(L"-silent", runair);
+		DeleteFile(runair);
+
+		PAppend(airlatest, adobedir);
+		PAppend(airlatest, air);
+		UnblockFile(airlatest);
+		CpFile(airlatest, airdest);
 
 		EnableWindow(hwndButton, FALSE);
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));

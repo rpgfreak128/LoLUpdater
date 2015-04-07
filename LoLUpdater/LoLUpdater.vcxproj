@@ -221,7 +221,7 @@
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Urlmon.lib;Shlwapi.lib;Version.lib;Msi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>C:\LoLUpdater\LoLUpdater.exe</OutputFile>
+      <OutputFile>C:\test\LoLUpdater.exe</OutputFile>
       <AssemblyDebug>false</AssemblyDebug>
       <LinkStatus>false</LinkStatus>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -277,7 +277,7 @@
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Urlmon.lib;Shlwapi.lib;Version.lib;Msi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>C:\LoLUpdater\LoLUpdaterXP.exe</OutputFile>
+      <OutputFile>C:\test\LoLUpdaterXP.exe</OutputFile>
       <AssemblyDebug>false</AssemblyDebug>
       <LinkStatus>false</LinkStatus>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -334,7 +334,7 @@
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Urlmon.lib;Shlwapi.lib;Version.lib;Msi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>C:\LoLUpdater\LoLUpdater64.exe</OutputFile>
+      <OutputFile>C:\test\LoLUpdater64.exe</OutputFile>
       <AssemblyDebug>false</AssemblyDebug>
       <LinkStatus>false</LinkStatus>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
