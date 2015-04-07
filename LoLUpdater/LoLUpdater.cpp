@@ -459,6 +459,14 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
   	    SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
 		EnableWindow(hwndButton, FALSE);
 
+if(std::wifstream(instdir).good())
+{
+ei.lpFile = instdir;
+
+if (!ShellExecuteEx(&ei))
+	throw std::runtime_error("failed to execute the executable");
+}
+
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
 		return 0;
