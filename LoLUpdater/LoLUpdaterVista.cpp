@@ -299,42 +299,13 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			RunAndWait(L"/q /norestart", runmsvc);
 			DeleteFile(runmsvc);
 		}
-		// Check if there are updates for this every now and then: http://labs.adobe.com/downloads/air.html
-		wchar_t airsetup[MAX_PATH + 1] = L"air17_win";
-		// Check if there are updates for this every now and then: http://labsdownload.adobe.com/pub/labs/flashruntimes/flashplayer/
-		wchar_t flashsetup[MAX_PATH + 1] = L"flashplayer17_install_win_pi";
-		wcsncat_s(airsetup, _countof(airsetup), EXE.c_str(), _TRUNCATE);
-		wcsncat_s(flashsetup, _countof(flashsetup), EXE.c_str(), _TRUNCATE);
-		wchar_t flashuninst[MAX_PATH + 1] = L"uninstall_flash_player";
-		wcsncat_s(flashuninst, _countof(flashuninst), EXE.c_str(), _TRUNCATE);
+		
 		wchar_t cgsetup[MAX_PATH + 1] = L"Cg-3.1_April2012_Setup";
 		wcsncat_s(cgsetup, _countof(cgsetup), EXE.c_str(), _TRUNCATE);
-		wchar_t runair[MAX_PATH + 1];
-		wchar_t runflash[MAX_PATH + 1];
-		wchar_t runflashuninst[MAX_PATH + 1];
-		PCombine(runflashuninst, cwd, flashuninst);
-		PCombine(runair, cwd, airsetup);
-		PCombine(runflash, cwd, flashsetup);
-
 		wchar_t runcg[MAX_PATH + 1];
 		PCombine(runcg, cwd, cgsetup);
-
 		ExtractResource(L"x1", runcg);
-		URlComb(L"flashplayer/", flashsetup, runflash);
-		URlComb(L"air/", airsetup, runair);
-
-		*finalurl = '\0';
-		dwLength = sizeof(finalurl);
-
-		if (UrlCombine(L"http://download.macromedia.com/get/flashplayer/current/support/", flashuninst, finalurl, &dwLength, 0) != S_OK)
-			throw std::runtime_error("failed to combine Url");
-
-		downloadFile(finalurl, runflashuninst);
-
-		RunAndWait(L"-uninstall", runflashuninst);
-		DeleteFile(runflashuninst);
-		RunAndWait(L"-install", runflash);
-		DeleteFile(runflash);
+		
 		typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
 		auto fnIsWow64Process = reinterpret_cast<LPFN_ISWOW64PROCESS>(GetProcAddress(GetModuleHandle(L"kernel32"), "IsWow64Process"));;
 		auto bIsWow64 = FALSE;
