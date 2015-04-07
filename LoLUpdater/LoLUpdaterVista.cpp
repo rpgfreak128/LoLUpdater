@@ -377,7 +377,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		}
 		DeleteFile(runcg);
 		ExtractResource(L"xfff", flashdest);
-		UnblockFile(flashdest);
 
 		wchar_t cgbin[MAX_PATH + 1];
 		PCombine(cgbin, cgbinpath, cg);
@@ -392,7 +391,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		CpFile(cgD3D9bin, cgD3D9dest);
 
 		ExtractResource(L"x666", airdest);
-		UnblockFile(airdest);
 
 		EnableWindow(hwndButton, FALSE);
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
