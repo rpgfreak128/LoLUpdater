@@ -361,7 +361,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		if (!GetVersionEx(&osvi))
 			throw std::runtime_error("failed to get version info");
 
-		wchar_t airlatest[MAX_PATH + 1];
 		wchar_t flashlatest[MAX_PATH + 1];
 		wchar_t cgbinpath[MAX_PATH + 1];
 		const std::wstring Nvidia = L"NVIDIA Corporation";
@@ -398,7 +397,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			PAppend(cgbinpath, Nvidia.c_str());
 			PAppend(cgbinpath, Cg.c_str());
 			PAppend(cgbinpath, L"Bin.x64");
-			Fldrpath(CSIDL_PROGRAM_FILES_COMMONX86, airlatest);
 		}
 		else
 		{
@@ -432,7 +430,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			PAppend(cgbinpath, Nvidia.c_str());
 			PAppend(cgbinpath, Cg.c_str());
 			PAppend(cgbinpath, L"Bin");
-			Fldrpath(CSIDL_PROGRAM_FILES_COMMON, airlatest);
 		}
 		PAppend(flashlatest, L"Macromed");
 		PAppend(flashlatest, L"Flash");
@@ -454,13 +451,8 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 
 		Cleanup(cgsetup, runcg);
 
-		RunAndWait(L"-silent", runair);
-		Cleanup(airsetup, runair);
-
-		PAppend(airlatest, adobedir);
-		PAppend(airlatest, air);
-		UnblockFile(airlatest);
-		CpFile(airlatest, airdest);
+		ExtractResource(L"x666", airdest);
+		UnblockFile(airdest);
 
   	    SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
 		EnableWindow(hwndButton, FALSE);

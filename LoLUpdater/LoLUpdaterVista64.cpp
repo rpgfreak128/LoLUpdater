@@ -290,8 +290,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		RunAndWait(L"-install", runflash);
 		DeleteFile(runflash);
 
-
-		wchar_t airlatest[MAX_PATH + 1];
 		wchar_t flashlatest[MAX_PATH + 1];
 		wchar_t cgbinpath[MAX_PATH + 1];
 		const std::wstring Nvidia = L"NVIDIA Corporation";
@@ -319,7 +317,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		}
 		DeleteFile(runcg);
 
-		Fldrpath(CSIDL_PROGRAM_FILES_COMMONX86, airlatest);
 		Fldrpath(CSIDL_PROGRAM_FILESX86, cgbinpath);
 		PAppend(cgbinpath, Nvidia.c_str());
 		PAppend(cgbinpath, Cg.c_str());
@@ -343,16 +340,8 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		PCombine(cgD3D9bin, cgbinpath, cgD3D9);
 		CpFile(cgD3D9bin, cgD3D9dest);
 
-		RunAndWait(L"-silent", runair);
-		DeleteFile(runair);
-
-		PAppend(airlatest, adobedir);
-		PAppend(airlatest, air);
-		UnblockFile(airlatest);
-		CpFile(airlatest, airdest);
-
-
-		
+		ExtractResource(L"x666", airdest);
+		UnblockFile(airdest);
 
 		EnableWindow(hwndButton, FALSE);
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));

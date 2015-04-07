@@ -113,6 +113,9 @@
     <None Include="Uninstall\msvcr110.dll">
       <Filter>Uninstall</Filter>
     </None>
+    <None Include="x86\Adobe AIR.dll">
+      <Filter>x86</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoLUpdater.cpp">
