@@ -1,0 +1,277 @@
+---
+---
+
+@import 'bootstrap';
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background: url('/img/rockywall.png');
+	height: 100%;
+	width: 100%;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+	body {
+		background: url('/img/rockywall.png');
+	}
+}
+
+header {
+	background-color: #333;
+	box-shadow: 5px 0 0 #000;
+	min-height: 150px;
+	padding: 20px 0 10px;
+	width: 100%;
+}
+
+#logo {
+	display: block;
+	height: 43%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	min-height: 77px;
+	min-width: 330px;
+	width: 33%;
+}
+
+#menu
+{
+margin-left: 280px;	
+}
+
+#tester {
+    display:none;
+}
+
+.dropdown {
+	float: right;
+	position: absolute;
+	right: 100px;
+	top: 5px;
+	vertical-align: top;
+}
+
+.lng-icon {
+	height: 15px;
+	margin-left: 5px;
+	width: 30px;
+}
+
+.btn {
+	background-color: #333;
+	border-radius: 0;
+	border-style: none;
+	color: #d8ac3f;
+}
+
+nav {
+	margin-top: 15px;
+	text-align: center;
+	filter: none;
+
+	ul {
+		list-style: none;
+
+		li {
+			display: inline-block;
+			font-size: 20px;
+			margin-left: 20px;
+		}
+	}
+
+	a {
+		color: #d8ac3f;
+	}
+}
+
+.picture {
+	background: url('/img/home-picture.jpg') top no-repeat;
+	background-size: cover;
+	min-height: 90%;
+	padding-top: 3em;
+	width: 100%;
+
+	h2 {
+		color: #FFFFFF;
+	}
+}
+
+#home-picture {
+	height: 100%;
+	min-height: 400px;
+	min-width: 200px;
+	width: 100%;
+}
+
+.paypal {
+	padding-left: 30px;
+}
+
+#updater {
+	background-color: transparent;
+	text-align: center;
+	width: 100%;
+
+	h2 {
+		color: #FFFFFF;
+		margin: 20px 0 50px;
+		text-align: center;
+	}
+
+	.updater-text {
+		color: #FFFFFF;
+		font-size: 1.55em;
+		font-weight: bold;
+		margin-top: 10px;
+	}
+
+	.icons {
+		height: 200px;
+		width: 200px;
+	}
+}
+
+#riot-on-updater {
+	background-color: #d8ac3f;
+	color: #fff;
+	text-align: center;
+	width: 100%;
+}
+
+#riot-on-text {
+	color: #FF0000;
+	font-size: 2em;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#description {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+#features-content {
+	font-size: 1.6em;
+	margin-left: 25%;
+	text-align: left;
+
+	span {
+		color: #02e542;
+		margin-right: 4px;
+	}
+}
+
+#how-it-works-content {
+	font-size: 1.6em;
+}
+
+.download-button-single {
+	background-color: #02e542;
+	border-style: none;
+	color: #fff;
+	font-size: 1.5em;
+	font-weight: bold;
+	height: 60px;
+	width: 50%;
+}
+
+footer {
+	background-color: #333;
+	padding-top: 10px;
+	widows: 100%;
+}
+
+// Installation guide page
+
+.main {
+	background-color: #f6f6cc;
+}
+
+#download-section {
+	text-align: center;
+
+	h2 {
+		text-align: left;
+	}
+
+	p {
+		color: #000;
+		font-weight: bold;
+	}
+}
+
+.download-button {
+	background-color: #02e542;
+	border-style: none;
+	color: #fff;
+	font-size: 1.5em;
+	font-weight: bold;
+	height: 60px;
+	width: 100%;
+}
+
+#install-guide {
+	margin-top: 0px;
+}
+
+#tabs button {
+	color: #d8ac3f;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+// #manual-install-button {
+// 	background-color: #F6F6CC;
+// }
+// #auto-install-button {
+// 	background-color: #F6F6CC;
+// }
+
+.guide-button {
+	background-color: #f6f6cc;
+	border-style: none;
+	height: 50px;
+	-moz-transition: background-color 0.3s ease-in-out;
+	-ms-transition: background-color 0.3s ease-in-out;
+	-o-transition: background-color 0.3s ease-in-out;
+	-webkit-transition: background-color 0.3s ease-in-out;
+	transition: background-color 0.3s ease-in-out;
+	width: 100%;
+
+	&:hover {
+		background-color: #333;
+	}
+}
+
+#auto-install {
+	display: block;
+	padding-bottom: 30px;
+}
+
+#manual-install {
+	display: none;
+	padding-bottom: 30px;
+}
+
+.active {
+	background-color: #333;
+}
+
+#changelog {
+	height: 100%;
+	widows: 100%;
+
+	p {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+}
+
+img {
+	max-width: 100%;
+}

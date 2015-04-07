@@ -1,0 +1,58 @@
+---
+title: OSX Install
+layout: default
+---
+	<div class="main">
+		<div id="install-guide">
+		<div id="tabs">
+				<div class="container">
+				<h2>1. Choose how to install</h2>
+				<div class="col-md-4">
+					<button class="guide-button active" id="auto-install-button">Auto (LoLUpdater.exe)</button>
+				</div>
+				<div class="col-md-4">
+					<button class="guide-button" id="manual-install-button">Manual (Copy-paste)</button>
+				</div>
+				</div>
+			</div>
+			<div id="install-guide-content">
+				<div class="container">
+					<div id="auto-install">
+						<div id="download-section">
+				<h2>2. Download</h2>
+				<div class="col-md-4">
+					<img src="/img/apple.png">
+					<a href="https://github.com/Loggan08/LoLUpdater/archive/OSX.zip"><button class="download-button" >Download Source-Code (Beta)</button></a>
+				<br>
+				<br>
+				<a href="http://www.smoothdev.org/mirrors/download.php?user=Loggan&file=RjlxOWh5OTNsZVdPUnljbUorVFhYZz09"><button class="download-button" >Download</button></a>
+				<p>By DavidKNA (v1.4.1)</p>	
+				</div>
+		</div>
+				<h2>3. Run the bash-script</h2>
+				<ul>
+				<li>Execute the bash-script from terminal or simply run it</li>
+				</ul>
+					
+
+
+<br>
+<h2>The LoLUpdater patch will be reset everytime Riot updates League</h2>
+					</div>
+
+					<div id="manual-install">
+						
+			<p>Check back later</p>			
+						
+		</div>
+			<script type="text/javascript">
+		/*Installation guide tab switching content from auto-install to manual-install*/
+		document.addEventListener("DOMContentLoaded", function(event) {
+			$('.guide-button').click(function() {
+					$('#auto-install, #manual-install').toggle()
+					$('#manual-install-button, #auto-install-button').toggleClass('active');
+				});
+		});
+	</script>
+	</div>
+<script defer src="/js/dropdown.js"></script>
