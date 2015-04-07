@@ -116,6 +116,9 @@
     <None Include="x86\Adobe AIR.dll">
       <Filter>x86</Filter>
     </None>
+    <None Include="x86\NPSWF32.dll">
+      <Filter>x86</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoLUpdater.cpp">

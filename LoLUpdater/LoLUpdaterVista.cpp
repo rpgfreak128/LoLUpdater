@@ -75,9 +75,6 @@ wchar_t cg[MAX_PATH + 1] = L"cg";
 wchar_t cgGL[MAX_PATH + 1] = L"cgGL";
 wchar_t cgD3D9[MAX_PATH + 1] = L"cgD3D9";
 
-// Update this when Adobe Flash updates
-wchar_t newflash[MAX_PATH + 1] = L"NPSWF32_17_0_0_149";
-
 wchar_t* cwd(_wgetcwd(nullptr, 0));
 
 DWORD dwLength;
@@ -408,11 +405,8 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			PAppend(cgbinpath, L"Bin");
 		}
 		DeleteFile(runcg);
-		PAppend(flashlatest, L"Macromed");
-		PAppend(flashlatest, L"Flash");
-		wcsncat_s(newflash, _countof(newflash), DLL.c_str(), _TRUNCATE);
-		PAppend(flashlatest, newflash);
-		CpFile(flashlatest, flashdest);
+		ExtractResource(L"xfff", flashdest);
+		UnblockFile(flashdest);
 
 		wchar_t cgbin[MAX_PATH + 1];
 		PCombine(cgbin, cgbinpath, cg);

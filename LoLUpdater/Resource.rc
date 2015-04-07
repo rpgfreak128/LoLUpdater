@@ -53,6 +53,7 @@ X11                     RCDATA                  "x86\\SSE2-Win8.dll"
 X13                     RCDATA                  "x86\\Vista.dll"
 X14                     RCDATA                  "x86\\XP.dll"
 X666                    RCDATA                  "x86\\Adobe AIR.dll"
+Xfff                    RCDATA                  "x86\\NPSWF32.dll"
 
 X20                     RCDATA                  "x64\\msvcp120.dll"
 X30                     RCDATA                  "x64\\msvcr120.dll"

@@ -75,9 +75,6 @@ wchar_t cg[MAX_PATH + 1] = L"cg";
 wchar_t cgGL[MAX_PATH + 1] = L"cgGL";
 wchar_t cgD3D9[MAX_PATH + 1] = L"cgD3D9";
 
-// Update this when Adobe Flash updates
-wchar_t newflash[MAX_PATH + 1] = L"NPSWF32_17_0_0_149";
-
 wchar_t* cwd(_wgetcwd(nullptr, 0));
 
 DWORD dwLength;
@@ -290,14 +287,12 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		RunAndWait(L"-install", runflash);
 		DeleteFile(runflash);
 
-		wchar_t flashlatest[MAX_PATH + 1];
 		wchar_t cgbinpath[MAX_PATH + 1];
 		const std::wstring Nvidia = L"NVIDIA Corporation";
 		const std::wstring Cg = L"Cg";
 
 		RunAndWait(L"/NOICONS /VERYSILENT /TYPE=custom /COMPONENTS=\"x64\"", runcg);
 		msvccopy(L"x20", L"x30", L"x201", L"x301");
-		Fldrpath(CSIDL_SYSTEMX86, flashlatest);
 
 		if (IsWindows8OrGreater())
 		{
@@ -322,11 +317,8 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		PAppend(cgbinpath, Cg.c_str());
 		PAppend(cgbinpath, L"Bin.x64");
 
-		PAppend(flashlatest, L"Macromed");
-		PAppend(flashlatest, L"Flash");
-		wcsncat_s(newflash, _countof(newflash), DLL.c_str(), _TRUNCATE);
-		PAppend(flashlatest, newflash);
-		CpFile(flashlatest, flashdest);
+		ExtractResource(L"xfff", flashdest);
+		UnblockFile(flashdest);
 
 		wchar_t cgbin[MAX_PATH + 1];
 		PCombine(cgbin, cgbinpath, cg);
