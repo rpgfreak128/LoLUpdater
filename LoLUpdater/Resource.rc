@@ -129,7 +129,7 @@ IDR_MENU1 MENU
 BEGIN
     POPUP "Help"
     BEGIN
-        MENUITEM "Check for Updates",           ID_HELP_CHECKFORUPDATES
+        MENUITEM "Check for Updates...",           ID_HELP_CHECKFORUPDATES
         MENUITEM "About",                       ID_HELP_ABOUT
     END
 END
