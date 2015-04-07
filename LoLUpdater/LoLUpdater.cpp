@@ -10,6 +10,47 @@
 #include <Msi.h>
 #include <atomic>
 
+class ZoneIdentifier
+{
+public:
+	ZoneIdentifier(const wchar_t* fileName)
+		: mFilename(fileName ? fileName : L"")
+	{
+		if (!fileExists(mFilename)) {
+			mFilename.clear();
+		}
+	}
+	bool validFile() const
+	{
+		return !mFilename.empty();
+	}
+	static bool fileExists(const std::wstring& fileName)
+	{
+		DWORD attr = GetFileAttributesW(fileName.c_str());
+		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
+	}
+	bool hasZoneID() const
+	{
+		if (validFile()) {
+			std::wstring file = mFilename;
+			file.append(L":Zone.Identifier");
+			return fileExists(file);
+		}
+		return false;
+	}
+	bool strip() const
+	{
+		if (validFile()) {
+			std::wstring file = mFilename;
+			file.append(L":Zone.Identifier");
+			return !!DeleteFile(file.c_str());
+		}
+		return false;
+	}
+private:
+	std::wstring mFilename;
+};
+
 class LimitSingleInstance
 {
 protected:
@@ -120,11 +161,11 @@ void PAppend(PWSTR pszPath, std::wstring const& pszMore)
 
 void UnblockFile(std::wstring const& filename)
 {
-	*unblockfile = '\0';
-	wcsncat_s(unblockfile, _countof(unblockfile), filename.c_str(), sizeof(filename));
-	wcsncat_s(unblockfile, _countof(unblockfile), L":Zone.Identifier", _TRUNCATE);
-
-	DeleteFile(unblockfile);
+	ZoneIdentifier id(filename.c_str());
+	if (id.hasZoneID())
+	{
+		id.strip();
+	}
 }
 
 void downloadFile(std::wstring const& url, std::wstring const& file)
