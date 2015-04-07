@@ -86,7 +86,6 @@ private:
 	std::wstring mFilename;
 };
 
-wchar_t unblockfile[MAX_PATH + 1];
 wchar_t airclientd[MAX_PATH + 1];
 wchar_t gameclient[MAX_PATH + 1];
 wchar_t patchclient[MAX_PATH + 1];
