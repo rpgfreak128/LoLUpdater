@@ -265,35 +265,24 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 {
 	if (IsWindows7OrGreater())
 	{
-		std::wstring input;
-		std::wcin >> input;
-		std::wofstream out("IsWin7.txt");
-		out << input;
-		out.close();
 		bool can_use_intel_core_4th_gen_features = TRUE;
 		int abcd[4];
 		run_cpuid(1, 0, abcd);
-		std::wstring input1;
-		std::wcin >> input1;
-		std::wofstream out1("CanrunCPUID.txt");
-		out1 << input1;
-		out1.close();
 		const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
-		std::wstring inputa;
-		std::wcin >> inputa;
-		std::wofstream outa("const uint32-1.txt");
-		outa << inputa;
-		outa.close();
-		const uint32_t check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
+
+
+		uint32_t check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
 		std::wstring inputb;
 		std::wcin >> inputb;
 		std::wofstream outb("const uint32-2.txt");
 		outb << inputb;
 		outb.close();
+
 		if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
 		{
 			can_use_intel_core_4th_gen_features = FALSE;
 		}
+
 		std::wstring input2;
 		std::wcin >> input2;
 		std::wofstream out2("Check1.txt");
