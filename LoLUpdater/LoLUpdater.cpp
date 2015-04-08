@@ -176,6 +176,7 @@ void downloadFile(std::wstring const& url, std::wstring const& file)
 	UnblockFile(file);
 }
 
+
 void ExtractResource(std::wstring const& RCDATAID, std::wstring const& filename)
 {
 	auto hRes = FindResource(nullptr, RCDATAID.c_str(), RT_RCDATA);
@@ -299,25 +300,6 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 	}
 }
 
-void RunAndWait(const std::wstring& lpParameters, const std::wstring& lpFile)
-{
-	Msg = {};
-
-	ei.lpParameters = lpParameters.c_str();
-	ei.lpFile = lpFile.c_str();
-
-	if (!ShellExecuteEx(&ei))
-		throw std::runtime_error("failed to execute the executable");
-
-	while (WAIT_OBJECT_0 != MsgWaitForMultipleObjects(1, &ei.hProcess, FALSE, INFINITE, QS_ALLINPUT))
-	{
-		while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			DispatchMessage(&Msg);
-		}
-	}
-}
-
 void Cleanup(const std::wstring& file1, const std::wstring& file2)
 {
 	if (osvi.dwMajorVersion == 5)
@@ -348,9 +330,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 	case WM_LBUTTONDOWN:
 		Msg = {};
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Patching..."));
-		ei.cbSize = sizeof(SHELLEXECUTEINFO);
-		ei.fMask = SEE_MASK_NOCLOSEPROCESS;
-		ei.nShow = SW_SHOW;
+
 		if (MsiQueryProductState(L"{2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3}") != INSTALLSTATE_DEFAULT)
 		{
 			wchar_t msvc[MAX_PATH + 1] = L"vcredist_x86";
@@ -365,8 +345,22 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
+			ei.cbSize = sizeof(SHELLEXECUTEINFO);
+			ei.fMask = SEE_MASK_NOCLOSEPROCESS;
+			ei.nShow = SW_SHOW;
+			ei.lpParameters = L"/q /norestart";
+			ei.lpFile = runmsvc;
 
-			RunAndWait(L"/q /norestart", runmsvc);
+			if (!ShellExecuteEx(&ei))
+				throw std::runtime_error("failed to execute the executable");
+
+			while (WAIT_OBJECT_0 != MsgWaitForMultipleObjects(1, &ei.hProcess, FALSE, INFINITE, QS_ALLINPUT))
+			{
+				while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
+				{
+					DispatchMessage(&Msg);
+				}
+			}
 			Cleanup(msvc, runmsvc);
 		}
 		

@@ -91,8 +91,8 @@ LRESULT CALLBACK ButtonProc2(HWND, UINT, WPARAM, LPARAM);
 WNDPROC OldButtonProc;
 WNDPROC OldButtonProc2;
 
-SHELLEXECUTEINFO ei;
 MSG Msg;
+SHELLEXECUTEINFO ei;
 
 FILE* f;
 
@@ -305,25 +305,6 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 	}
 }
 
-void RunAndWait(const std::wstring& lpParameters, const std::wstring& lpFile)
-{
-	Msg = {};
-
-	ei.lpParameters = lpParameters.c_str();
-	ei.lpFile = lpFile.c_str();
-
-	if (!ShellExecuteEx(&ei))
-		throw std::runtime_error("failed to execute the executable");
-
-	while (WAIT_OBJECT_0 != MsgWaitForMultipleObjects(1, &ei.hProcess, FALSE, INFINITE, QS_ALLINPUT))
-	{
-		while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			DispatchMessage(&Msg);
-		}
-	}
-}
-
 LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
@@ -332,9 +313,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		Msg = {};
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Patching..."));
 
-		ei.cbSize = sizeof(SHELLEXECUTEINFO);
-		ei.fMask = SEE_MASK_NOCLOSEPROCESS;
-		ei.nShow = SW_SHOW;
 		if (MsiQueryProductState(L"{13A4EE12-23EA-3371-91EE-EFB36DDFFF3E}") != INSTALLSTATE_DEFAULT)
 		{
 			wchar_t msvc[MAX_PATH + 1] = L"vcredist_x86";
@@ -348,7 +326,23 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
-			RunAndWait(L"/q /norestart", runmsvc);
+			SHELLEXECUTEINFO ei;
+			ei.cbSize = sizeof(SHELLEXECUTEINFO);
+			ei.fMask = SEE_MASK_NOCLOSEPROCESS;
+			ei.nShow = SW_SHOW;
+			ei.lpParameters = L"/q /norestart";
+			ei.lpFile = runmsvc;
+
+			if (!ShellExecuteEx(&ei))
+				throw std::runtime_error("failed to execute the executable");
+
+			while (WAIT_OBJECT_0 != MsgWaitForMultipleObjects(1, &ei.hProcess, FALSE, INFINITE, QS_ALLINPUT))
+			{
+				while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
+				{
+					DispatchMessage(&Msg);
+				}
+			}			
 			DeleteFile(runmsvc);
 		}
 				
