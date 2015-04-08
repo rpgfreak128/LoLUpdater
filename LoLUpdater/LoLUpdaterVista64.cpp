@@ -124,8 +124,6 @@ HWND hwnd2;
 HWND hwndButton;
 HWND hwndButton2;
 
-ZoneIdentifier id;
-
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK ButtonProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK ButtonProc2(HWND, UINT, WPARAM, LPARAM);
@@ -157,7 +155,7 @@ void PAppend(PWSTR pszPath, std::wstring const& pszMore)
 
 void UnblockFile(std::wstring const& filename)
 {
-	id = filename.c_str();
+	ZoneIdentifier id(filename.c_str());
 	if (id.hasZoneID())
 	{
 		id.strip();
