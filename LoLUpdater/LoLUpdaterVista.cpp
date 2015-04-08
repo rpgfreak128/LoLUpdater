@@ -366,7 +366,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			// handle error
 		}
 
-		wchar_t flashlatest[MAX_PATH + 1];
 		wchar_t cgbinpath[MAX_PATH + 1];
 		const std::wstring Nvidia = L"NVIDIA Corporation";
 		const std::wstring Cg = L"Cg";
@@ -374,7 +373,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		{
 			RunAndWait(L"/NOICONS /VERYSILENT /TYPE=custom /COMPONENTS=\"x64\"", runcg);
 			msvccopy(L"x20", L"x30", L"x201", L"x301");
-			Fldrpath(CSIDL_SYSTEMX86, flashlatest);
 
 			if (IsWindows8OrGreater())
 			{
@@ -401,7 +399,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		{
 			RunAndWait(L"/NOICONS /VERYSILENT /TYPE=compact", runcg);
 			msvccopy(L"x2", L"x3", L"x200", L"x300");
-			Fldrpath(CSIDL_SYSTEM, flashlatest);
+
 
 
 			if (IsWindows8OrGreater())
