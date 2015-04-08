@@ -411,12 +411,13 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LoLUpdater.cpp">
+    <None Include="LoLUpdater.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XP|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XP|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </None>
     <ClCompile Include="LoLUpdaterVista.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XP|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -435,13 +436,15 @@
     <Image Include="..\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cg-3.1_April2012_Setup.exe" />
     <None Include="Uninstall\Adobe AIR.dll" />
     <None Include="Uninstall\msvcp110.dll" />
     <None Include="Uninstall\msvcp120.dll" />
     <None Include="Uninstall\msvcr110.dll" />
     <None Include="Uninstall\msvcr120.dll" />
     <None Include="Uninstall\NPSWF32.dll" />
+    <None Include="x64\cg.dll" />
+    <None Include="x64\cgD3D9.dll" />
+    <None Include="x64\cgGL.dll" />
     <None Include="x64\msvcp110.dll" />
     <None Include="x64\msvcp120.dll" />
     <None Include="x64\msvcr110.dll" />
@@ -490,6 +493,18 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='XP|Win32'">true</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='XP|Win32'">false</DeploymentContent>
+    </None>
+    <None Include="x86\cg.dll">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </None>
+    <None Include="x86\cgD3D9.dll">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </None>
+    <None Include="x86\cgGL.dll">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </None>
     <None Include="x86\msvcp110.dll">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

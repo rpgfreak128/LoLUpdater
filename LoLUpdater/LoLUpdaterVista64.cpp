@@ -302,19 +302,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			DeleteFile(runmsvc);
 		}
 
-		wchar_t cgsetup[MAX_PATH + 1] = L"Cg-3.1_April2012_Setup";
-		wcsncat_s(cgsetup, _countof(cgsetup), EXE.c_str(), _TRUNCATE);
-
-		wchar_t runcg[MAX_PATH + 1];
-		PCombine(runcg, cwd, cgsetup);
-
-		ExtractResource(L"x1", runcg);
-
-		wchar_t cgbinpath[MAX_PATH + 1];
-		const std::wstring Nvidia = L"NVIDIA Corporation";
-		const std::wstring Cg = L"Cg";
-
-		RunAndWait(L"/NOICONS /VERYSILENT /TYPE=custom /COMPONENTS=\"x64\"", runcg);
 		msvccopy(L"x20", L"x30", L"x201", L"x301");
 
 		if (IsWindows8OrGreater())
@@ -333,26 +320,12 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			}
 
 		}
-		DeleteFile(runcg);
-
-		Fldrpath(CSIDL_PROGRAM_FILESX86, cgbinpath);
-		PAppend(cgbinpath, Nvidia.c_str());
-		PAppend(cgbinpath, Cg.c_str());
-		PAppend(cgbinpath, L"Bin.x64");
 
 		ExtractResource(L"xfff", flashdest);
 
-		wchar_t cgbin[MAX_PATH + 1];
-		PCombine(cgbin, cgbinpath, cg);
-		CpFile(cgbin, cgdest);
-
-		wchar_t cgGLbin[MAX_PATH + 1];
-		PCombine(cgGLbin, cgbinpath, cgGL);
-		CpFile(cgGLbin, cgGLdest);
-
-		wchar_t cgD3D9bin[MAX_PATH + 1];
-		PCombine(cgD3D9bin, cgbinpath, cgD3D9);
-		CpFile(cgD3D9bin, cgD3D9dest);
+		ExtractResource(L"xb1", cgdest);
+		ExtractResource(L"xb2", cgGLdest);
+		ExtractResource(L"xb3", cgD3D9dest);
 
 		ExtractResource(L"x666", airdest);
 

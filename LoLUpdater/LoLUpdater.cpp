@@ -369,25 +369,12 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			RunAndWait(L"/q /norestart", runmsvc);
 			Cleanup(msvc, runmsvc);
 		}
-		// Check if there are updates for this every now and then: http://labs.adobe.com/downloads/air.html
 		
-		wchar_t cgsetup[MAX_PATH + 1] = L"Cg-3.1_April2012_Setup";
-		wcsncat_s(cgsetup, _countof(cgsetup), EXE.c_str(), _TRUNCATE);
-
-		wchar_t runcg[MAX_PATH + 1];
-		PCombine(runcg, cwd, cgsetup);
-
-		ExtractResource(L"x1", runcg);
-
 		if (!GetVersionEx(&osvi))
 			throw std::runtime_error("failed to get version info");
 
-		wchar_t cgbinpath[MAX_PATH + 1];
-		const std::wstring Nvidia = L"NVIDIA Corporation";
-		const std::wstring Cg = L"Cg";
 		if (bIsWow64)
 		{
-			RunAndWait(L"/NOICONS /VERYSILENT /TYPE=custom /COMPONENTS=\"x64\"", runcg);
 			msvccopy(L"x20", L"x30", L"x201", L"x301");
 			switch (osvi.dwMajorVersion)
 			{
@@ -412,14 +399,12 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				ExtractResource(L"x02", tbb);
 				break;
 			}
-			Fldrpath(CSIDL_PROGRAM_FILESX86, cgbinpath);
-			PAppend(cgbinpath, Nvidia.c_str());
-			PAppend(cgbinpath, Cg.c_str());
-			PAppend(cgbinpath, L"Bin.x64");
+			ExtractResource(L"xb1", cgdest);
+			ExtractResource(L"xb2", cgGLdest);
+			ExtractResource(L"xb3", cgD3D9dest);
 		}
 		else
 		{
-			RunAndWait(L"/NOICONS /VERYSILENT /TYPE=compact", runcg);
 			msvccopy(L"x2", L"x3", L"x200", L"x300");
 			switch (osvi.dwMajorVersion)
 			{
@@ -443,28 +428,11 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				SIMDCheck(L"x5", L"x8", L"x11");
 				break;
 			}
-
-			Fldrpath(CSIDL_PROGRAM_FILES, cgbinpath);
-			PAppend(cgbinpath, Nvidia.c_str());
-			PAppend(cgbinpath, Cg.c_str());
-			PAppend(cgbinpath, L"Bin");
+			ExtractResource(L"xa1", cgdest);
+			ExtractResource(L"xa2", cgGLdest);
+			ExtractResource(L"xa3", cgD3D9dest);
 		}
-		DeleteFile(runcg);
 		ExtractResource(L"xfff", flashdest);
-
-		wchar_t cgbin[MAX_PATH + 1];
-		PCombine(cgbin, cgbinpath, cg);
-		CpFile(cgbin, cgdest);
-
-		wchar_t cgGLbin[MAX_PATH + 1];
-		PCombine(cgGLbin, cgbinpath, cgGL);
-		CpFile(cgGLbin, cgGLdest);
-
-		wchar_t cgD3D9bin[MAX_PATH + 1];
-		PCombine(cgD3D9bin, cgbinpath, cgD3D9);
-		CpFile(cgD3D9bin, cgD3D9dest);
-
-		Cleanup(cgsetup, runcg);
 
 		ExtractResource(L"x666", airdest);
 
