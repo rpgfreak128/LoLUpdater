@@ -277,10 +277,7 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 		const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
 
 		int check_xcr0_ymm;
-		if (fnIsWow64Process != nullptr & !fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
-		{
-			// handle error
-		}
+
 		if (bIsWow64)
 		{
 			check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
@@ -357,7 +354,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
-
 			ei.lpParameters = L"/q /norestart";
 			ei.lpFile = runmsvc;
 
@@ -374,14 +370,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 			DeleteFile(runmsvc);
 		}
 				
-		typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
-		auto fnIsWow64Process = reinterpret_cast<LPFN_ISWOW64PROCESS>(GetProcAddress(GetModuleHandle(L"kernel32"), "IsWow64Process"));;
-		auto bIsWow64 = FALSE;
-
-		if (fnIsWow64Process != nullptr & !fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
-		{
-			// handle error
-		}
 
 
 		if (bIsWow64)
@@ -773,11 +761,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	PCombine(cgD3D9dest, gameclient, cgD3D9);
 	PCombine(tbb, gameclient, tbbfile);
 
+	if (fnIsWow64Process != nullptr & !fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
+	{
+		// handle error
+	}
 	ei.cbSize = sizeof(SHELLEXECUTEINFO);
 	ei.fMask = SEE_MASK_NOCLOSEPROCESS;
 	ei.nShow = SW_SHOW;
-
-
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 

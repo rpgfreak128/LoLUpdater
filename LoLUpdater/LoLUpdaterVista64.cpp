@@ -92,6 +92,7 @@ WNDPROC OldButtonProc;
 WNDPROC OldButtonProc2;
 
 SHELLEXECUTEINFO ei;
+
 MSG Msg;
 
 FILE* f;
@@ -640,11 +641,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	PCombine(cgGLdest, gameclient, cgGL);
 	PCombine(cgD3D9dest, gameclient, cgD3D9);
 	PCombine(tbb, gameclient, tbbfile);
-
 	ei.cbSize = sizeof(SHELLEXECUTEINFO);
 	ei.fMask = SEE_MASK_NOCLOSEPROCESS;
 	ei.nShow = SW_SHOW;
-
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 

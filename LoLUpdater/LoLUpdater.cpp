@@ -287,7 +287,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
-
 			ei.lpParameters = L"/q /norestart";
 			ei.lpFile = runmsvc;
 
@@ -667,11 +666,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	{
 		// handle error
 	}
-
 	ei.cbSize = sizeof(SHELLEXECUTEINFO);
 	ei.fMask = SEE_MASK_NOCLOSEPROCESS;
 	ei.nShow = SW_SHOW;
-
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 
