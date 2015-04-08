@@ -310,55 +310,12 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		if (bIsWow64)
 		{
 			msvccopy(L"x20", L"x30", L"x201", L"x301");
-			switch (osvi.dwMajorVersion)
-			{
-			case 5:
-				ExtractResource(L"x000", tbb);
-				break;
-			case 6:
-				switch (osvi.dwMinorVersion)
-				{
-				case 0:
-					ExtractResource(L"x00", tbb);
-					break;
-				case 1:
-					ExtractResource(L"x01", tbb);
-					break;
-				case 2:
-					ExtractResource(L"x02", tbb);
-					break;
-				}
-				break;
-			case 10:
-				ExtractResource(L"x02", tbb);
-				break;
-			}
+			ExtractResource(L"x000", tbb);
 		}
 		else
 		{
 			msvccopy(L"x2", L"x3", L"x200", L"x300");
-			switch (osvi.dwMajorVersion)
-			{
-			case 5:
-				ExtractResource(L"x14", tbb);
-				break;
-			case 6:
-				switch (osvi.dwMinorVersion)
-				{
-				case 0:
-					ExtractResource(L"x13", tbb);
-					break;
-				case 1:
-					SIMDCheck(L"x4", L"x7", L"x10");
-					break;
-				case 2:
-					SIMDCheck(L"x5", L"x8", L"x11");
-					break;
-				}
-			case 10:
-				SIMDCheck(L"x5", L"x8", L"x11");
-				break;
-			}
+			ExtractResource(L"x14", tbb);
 		}
 		ExtractResource(L"xa1", cgdest);
 		ExtractResource(L"xa2", cgGLdest);
@@ -523,7 +480,7 @@ void AutoUpdater()
 	}
 
 	t0.close();
-	DeleteFile(version);
+	DeleteFile(version.c_str());
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
