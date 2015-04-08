@@ -1,5 +1,5 @@
 // Minimum supported processor = Intel Pentium 4 (Or anything with at least SSE2)
-extern "C" int isAvxSupported(); 
+
 #include <Windows.h>
 #include <wininet.h>
 #include <fstream>
@@ -295,32 +295,9 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 	}
 	else
 	{
-		auto avxSupported = false;
-
-		// If Visual Studio 2010 SP1 or later
-		// Checking for AVX requires 3 things:
-		// 1) CPUID indicates that the OS uses XSAVE and XRSTORE
-		//     instructions (allowing saving YMM registers on context
-		//     switch)
-		// 2) CPUID indicates support for AVX
-		// 3) XGETBV indicates the AVX registers will be saved and
-		//     restored on context switch
-		//
-		// Note that XGETBV is only available on 686 or later CPUs, so
-		// the instruction needs to be conditionally run.
 		int cpuInfo[4];
 		__cpuid(cpuInfo, 1);
-
-		auto osUsesXSAVE_XRSTORE = cpuInfo[2] & (1 << 27) || false;
-		auto cpuAVXSuport = cpuInfo[2] & (1 << 28) || false;
-
-		if (osUsesXSAVE_XRSTORE && cpuAVXSuport)
-		{
-			// Check if the OS will save the YMM registers
-			auto xcrFeatureMask = _xgetbv(_XCR_XFEATURE_ENABLED_MASK);
-			avxSupported = xcrFeatureMask & 0x6 || false;
-		}
-		if (avxSupported)
+		if ((cpuInfo[2] & 1 << 27 || false) && (cpuInfo[2] & 1 << 28 || false) && check_xcr0_ymm)
 		{
 			ExtractResource(AVX, tbb);
 		}
