@@ -7,7 +7,6 @@ extern "C" int isAvxSupported();
 #include <Shlobj.h>
 #include "resource.h"
 #include <sstream>
-#include <Msi.h>
 #include <atomic>
 #include <versionhelpers.h>
 
@@ -96,7 +95,6 @@ WNDPROC OldButtonProc;
 WNDPROC OldButtonProc2;
 
 MSG Msg;
-SHELLEXECUTEINFO ei;
 
 FILE* f;
 
@@ -257,6 +255,10 @@ void Launch()
 {
 	if (std::wifstream(instdir).good())
 	{
+		SHELLEXECUTEINFO ei;
+		ei.cbSize = sizeof(SHELLEXECUTEINFO);
+		ei.fMask = SEE_MASK_NOCLOSEPROCESS;
+		ei.nShow = SW_SHOW;
 		ei.lpFile = instdir;
 
 		if (!ShellExecuteEx(&ei))
@@ -337,38 +339,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		Msg = {};
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Patching..."));
 
-		if (MsiQueryProductState(L"{2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3}") != INSTALLSTATE_DEFAULT)
-		{
-			wchar_t msvc[MAX_PATH + 1] = L"vcredist_x86";
-			wchar_t runmsvc[MAX_PATH + 1];
-			wcsncat_s(msvc, _countof(msvc), EXE.c_str(), _TRUNCATE);
-			PCombine(runmsvc, cwd, msvc);
-
-			*finalurl = '\0';
-			dwLength = sizeof(finalurl);
-
-			if (UrlCombine(L"http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/", msvc, finalurl, &dwLength, 0) != S_OK)
-				throw std::runtime_error("failed to combine Url");
-
-			downloadFile(finalurl, runmsvc);
-			ei.lpParameters = L"/q /norestart";
-			ei.lpFile = runmsvc;
-
-			if (!ShellExecuteEx(&ei))
-				throw std::runtime_error("failed to execute the executable");
-
-			while (WAIT_OBJECT_0 != MsgWaitForMultipleObjects(1, &ei.hProcess, FALSE, INFINITE, QS_ALLINPUT))
-			{
-				while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
-				{
-					DispatchMessage(&Msg);
-				}
-			}
-			DeleteFile(runmsvc);
-		}
-				
-
-
 		if (bIsWow64)
 		{
 			msvccopy(L"x20", L"x30", L"x201", L"x301");
@@ -393,7 +363,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		else
 		{
 			msvccopy(L"x2", L"x3", L"x200", L"x300");
-
 			if (IsWindows8OrGreater())
 			{
 				SIMDCheck(L"x5", L"x8", L"x11");
@@ -411,6 +380,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 
 			}
 		}
+
 		ExtractResource(L"xfff", flashdest);
 		ExtractResource(L"xa1", cgdest);
 		ExtractResource(L"xa2", cgGLdest);
@@ -762,9 +732,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	{
 		// handle error
 	}
-	ei.cbSize = sizeof(SHELLEXECUTEINFO);
-	ei.fMask = SEE_MASK_NOCLOSEPROCESS;
-	ei.nShow = SW_SHOW;
+
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 
