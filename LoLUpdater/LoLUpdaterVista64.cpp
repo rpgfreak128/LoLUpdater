@@ -92,6 +92,8 @@ WNDPROC OldButtonProc2;
 
 MSG Msg;
 
+SHELLEXECUTEINFO ei;
+
 FILE* f;
 
 class ZoneIdentifier
@@ -246,7 +248,6 @@ void Launch()
 {
 	if (std::wifstream(instdir).good())
 	{
-		SHELLEXECUTEINFO ei;
 		ei.cbSize = sizeof(SHELLEXECUTEINFO);
 		ei.fMask = SEE_MASK_NOCLOSEPROCESS;
 		ei.nShow = SW_SHOW;
