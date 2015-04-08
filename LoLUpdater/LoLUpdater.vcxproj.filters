@@ -127,6 +127,15 @@
     <None Include="x64\Win8.dll">
       <Filter>x64</Filter>
     </None>
+    <None Include="Uninstall\cg.dll">
+      <Filter>Uninstall</Filter>
+    </None>
+    <None Include="Uninstall\cgD3D9.dll">
+      <Filter>Uninstall</Filter>
+    </None>
+    <None Include="Uninstall\cgGL.dll">
+      <Filter>Uninstall</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoLUpdaterVista64.cpp">
