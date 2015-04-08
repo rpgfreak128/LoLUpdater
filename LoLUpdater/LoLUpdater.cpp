@@ -10,47 +10,6 @@
 #include <Msi.h>
 #include <atomic>
 
-class ZoneIdentifier
-{
-public:
-	ZoneIdentifier(const wchar_t* fileName)
-		: mFilename(fileName ? fileName : L"")
-	{
-		if (!fileExists(mFilename)) {
-			mFilename.clear();
-		}
-	}
-	bool validFile() const
-	{
-		return !mFilename.empty();
-	}
-	static bool fileExists(const std::wstring& fileName)
-	{
-		DWORD attr = GetFileAttributesW(fileName.c_str());
-		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
-	}
-	bool hasZoneID() const
-	{
-		if (validFile()) {
-			std::wstring file = mFilename;
-			file.append(L":Zone.Identifier");
-			return fileExists(file);
-		}
-		return false;
-	}
-	bool strip() const
-	{
-		if (validFile()) {
-			std::wstring file = mFilename;
-			file.append(L":Zone.Identifier");
-			return !!DeleteFile(file.c_str());
-		}
-		return false;
-	}
-private:
-	std::wstring mFilename;
-};
-
 class LimitSingleInstance
 {
 protected:
@@ -104,6 +63,7 @@ wchar_t finalurl[INTERNET_MAX_URL_LENGTH];
 
 const std::wstring EXE = L".exe";
 const std::wstring DLL = L".dll";
+const std::wstring unblocktag = L":Zone.Identifier";
 
 wchar_t msvcp[MAX_PATH + 1] = L"msvcp120";
 wchar_t msvcr[MAX_PATH + 1] = L"msvcr120";
@@ -140,6 +100,47 @@ MSG Msg;
 FILE* f;
 
 OSVERSIONINFO osvi{ sizeof(OSVERSIONINFO) };
+
+class ZoneIdentifier
+{
+public:
+	ZoneIdentifier(const wchar_t* fileName)
+		: mFilename(fileName ? fileName : L"")
+	{
+		if (!fileExists(mFilename)) {
+			mFilename.clear();
+		}
+	}
+	bool validFile() const
+	{
+		return !mFilename.empty();
+	}
+	static bool fileExists(const std::wstring& fileName)
+	{
+		DWORD attr = GetFileAttributesW(fileName.c_str());
+		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
+	}
+	bool hasZoneID() const
+	{
+		if (validFile()) {
+			std::wstring file = mFilename;
+			file.append(unblocktag.c_str());
+			return fileExists(file);
+		}
+		return false;
+	}
+	bool strip() const
+	{
+		if (validFile()) {
+			std::wstring file = mFilename;
+			file.append(unblocktag.c_str());
+			return !!DeleteFile(file.c_str());
+		}
+		return false;
+	}
+private:
+	std::wstring mFilename;
+};
 
 bool StandardLoL()
 {
