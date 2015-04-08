@@ -350,9 +350,9 @@ LRESULT CALLBACK ButtonProc2(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		msvccopy(L"x501", L"x601", L"x502", L"x602");
 		ExtractResource(L"x701", flashdest);
 
-		DeleteFile(cgdest);
-		DeleteFile(cgGLdest);
-		DeleteFile(cgD3D9dest);
+		ExtractResource(L"u1", cgdest);
+		ExtractResource(L"u2", cgGLdest);
+		ExtractResource(L"u3", cgD3D9dest);
 		DeleteFile(tbb);
 		EnableWindow(hwndButton2, FALSE);
 		SendMessage(hwndButton2, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));

@@ -38,9 +38,9 @@ END
 // RCDATA
 //
 
-Xa1                      RCDATA                  "x86\\cg.dll"
-Xa2                      RCDATA                  "x86\\cgGL.dll"
-Xa3                    RCDATA                  "x86\\cgD3D9.dll"
+Xa1                     RCDATA                  "x86\\cg.dll"
+Xa2                     RCDATA                  "x86\\cgGL.dll"
+Xa3                     RCDATA                  "x86\\cgD3D9.dll"
 
 X2                      RCDATA                  "x86\\msvcp120.dll"
 X3                      RCDATA                  "x86\\msvcr120.dll"
@@ -73,6 +73,10 @@ X502                    RCDATA                  "Uninstall\\msvcp110.dll"
 X602                    RCDATA                  "Uninstall\\msvcr110.dll"
 X701                    RCDATA                  "Uninstall\\NPSWF32.dll"
 
+Xu1                     RCDATA                  "Uninstall\\cg.dll"
+Xu2                     RCDATA                  "Uninstall\\cgGL.dll"
+Xu3                     RCDATA                  "Uninstall\\cgD3D9.dll"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -89,8 +93,8 @@ MAINICON                ICON                    "..\\icon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,1,4,3
- PRODUCTVERSION 1,1,4,3
+ FILEVERSION 1,1,4,4
+ PRODUCTVERSION 1,1,4,4
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -107,12 +111,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "http://lolupdater.com"
             VALUE "FileDescription", "LoLUpdater Beta - A tweak for League of Legends"
-            VALUE "FileVersion", "1.1.4.3"
+            VALUE "FileVersion", "1.1.4.4"
             VALUE "InternalName", "LoLUpdater.exe"
             VALUE "LegalCopyright", "Copyright (C) 2014-2015 Elias Gudsson"
             VALUE "OriginalFilename", "LoLUpdater.exe"
             VALUE "ProductName", "LoLUpdater"
-            VALUE "ProductVersion", "1.1.4.3"
+            VALUE "ProductVersion", "1.1.4.4"
         END
     END
     BLOCK "VarFileInfo"
