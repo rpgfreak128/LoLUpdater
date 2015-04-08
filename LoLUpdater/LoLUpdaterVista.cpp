@@ -1,5 +1,5 @@
 // Minimum supported processor = Intel Pentium 4 (Or anything with at least SSE2)
-
+extern "C" int isAvxSupported(); 
 #include <Windows.h>
 #include <wininet.h>
 #include <fstream>
@@ -9,7 +9,10 @@
 #include <sstream>
 #include <Msi.h>
 #include <atomic>
+#include <stdio.h>
+#include <intrin.h>
 #include <versionhelpers.h>
+
 
 class LimitSingleInstance
 {
@@ -112,13 +115,13 @@ public:
 	}
 	static bool fileExists(const std::wstring& fileName)
 	{
-		DWORD attr = GetFileAttributesW(fileName.c_str());
+		auto attr = GetFileAttributesW(fileName.c_str());
 		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
 	}
 	bool hasZoneID() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return fileExists(file);
 		}
@@ -127,7 +130,7 @@ public:
 	bool strip() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return !!DeleteFile(file.c_str());
 		}
@@ -267,7 +270,7 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 	run_cpuid(1, 0, abcd);
 
 	const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
-	const int check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
+	const auto check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
 	if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
 	{
 		can_use_intel_core_4th_gen_features = FALSE;
@@ -292,9 +295,32 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 	}
 	else
 	{
+		auto avxSupported = false;
+
+		// If Visual Studio 2010 SP1 or later
+		// Checking for AVX requires 3 things:
+		// 1) CPUID indicates that the OS uses XSAVE and XRSTORE
+		//     instructions (allowing saving YMM registers on context
+		//     switch)
+		// 2) CPUID indicates support for AVX
+		// 3) XGETBV indicates the AVX registers will be saved and
+		//     restored on context switch
+		//
+		// Note that XGETBV is only available on 686 or later CPUs, so
+		// the instruction needs to be conditionally run.
 		int cpuInfo[4];
 		__cpuid(cpuInfo, 1);
-		if ((cpuInfo[2] & 1 << 27 || false) && (cpuInfo[2] & 1 << 28 || false) && check_xcr0_ymm)
+
+		auto osUsesXSAVE_XRSTORE = cpuInfo[2] & (1 << 27) || false;
+		auto cpuAVXSuport = cpuInfo[2] & (1 << 28) || false;
+
+		if (osUsesXSAVE_XRSTORE && cpuAVXSuport)
+		{
+			// Check if the OS will save the YMM registers
+			auto xcrFeatureMask = _xgetbv(_XCR_XFEATURE_ENABLED_MASK);
+			avxSupported = xcrFeatureMask & 0x6 || false;
+		}
+		if (avxSupported)
 		{
 			ExtractResource(AVX, tbb);
 		}
@@ -313,16 +339,17 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		Msg = {};
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Patching..."));
 
-		if (MsiQueryProductState(L"{13A4EE12-23EA-3371-91EE-EFB36DDFFF3E}") != INSTALLSTATE_DEFAULT)
+		if (MsiQueryProductState(L"{2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3}") != INSTALLSTATE_DEFAULT)
 		{
 			wchar_t msvc[MAX_PATH + 1] = L"vcredist_x86";
 			wchar_t runmsvc[MAX_PATH + 1];
 			wcsncat_s(msvc, _countof(msvc), EXE.c_str(), _TRUNCATE);
 			PCombine(runmsvc, cwd, msvc);
+
 			*finalurl = '\0';
 			dwLength = sizeof(finalurl);
 
-			if (UrlCombine(L"http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E/", msvc, finalurl, &dwLength, 0) != S_OK)
+			if (UrlCombine(L"http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/", msvc, finalurl, &dwLength, 0) != S_OK)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
@@ -339,7 +366,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				{
 					DispatchMessage(&Msg);
 				}
-			}			
+			}
 			DeleteFile(runmsvc);
 		}
 				

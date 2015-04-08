@@ -221,7 +221,7 @@
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Urlmon.lib;Shlwapi.lib;Version.lib;Msi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>C:\test\LoLUpdater.exe</OutputFile>
+      <OutputFile>C:\test2\LoLUpdater.exe</OutputFile>
       <AssemblyDebug>false</AssemblyDebug>
       <LinkStatus>false</LinkStatus>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>

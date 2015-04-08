@@ -104,7 +104,7 @@ OSVERSIONINFO osvi{ sizeof(OSVERSIONINFO) };
 class ZoneIdentifier
 {
 public:
-	ZoneIdentifier(const wchar_t* fileName)
+	explicit ZoneIdentifier(const wchar_t* fileName)
 		: mFilename(fileName ? fileName : L"")
 	{
 		if (!fileExists(mFilename)) {
@@ -117,13 +117,13 @@ public:
 	}
 	static bool fileExists(const std::wstring& fileName)
 	{
-		DWORD attr = GetFileAttributesW(fileName.c_str());
+		auto attr = GetFileAttributesW(fileName.c_str());
 		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
 	}
 	bool hasZoneID() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return fileExists(file);
 		}
@@ -132,7 +132,7 @@ public:
 	bool strip() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return !!DeleteFile(file.c_str());
 		}
@@ -254,64 +254,6 @@ void msvccopy(std::wstring const& MSVCP, std::wstring const& MSVCR, std::wstring
 
 }
 
-
-void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring const& SSE2)
-{
-	bool can_use_intel_core_4th_gen_features = TRUE;
-	int abcd[4];
-	run_cpuid(1, 0, abcd);
-
-	const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
-	const int check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
-	if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	run_cpuid(7, 0, abcd);
-	const uint32_t avx2_bmi12_mask = 1 << 5 | 1 << 3 | 1 << 8;
-	if ((abcd[1] & avx2_bmi12_mask) != avx2_bmi12_mask)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	run_cpuid(0x80000001, 0, abcd);
-	if ((abcd[2] & 1 << 5) == 0)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	if (can_use_intel_core_4th_gen_features)
-	{
-		ExtractResource(AVX2, tbb);
-	}
-	else
-	{
-		int cpuInfo[4];
-		__cpuid(cpuInfo, 1);
-		if ((cpuInfo[2] & 1 << 27 || false) && (cpuInfo[2] & 1 << 28 || false) && check_xcr0_ymm)
-		{
-			ExtractResource(AVX, tbb);
-		}
-		else
-		{
-			ExtractResource(SSE2, tbb);
-		}
-	}
-}
-
-void Cleanup(const std::wstring& file1, const std::wstring& file2)
-{
-	if (osvi.dwMajorVersion == 5)
-	{
-		DeleteFile(file1.c_str());
-	}
-	else
-	{
-		DeleteFile(file2.c_str());
-	}
-}
-
 void Launch()
 {
 	if (std::wifstream(instdir).good())
@@ -359,7 +301,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 					DispatchMessage(&Msg);
 				}
 			}
-			Cleanup(msvc, runmsvc);
+			DeleteFile(msvc);
 		}
 		
 		if (!GetVersionEx(&osvi))
@@ -581,7 +523,7 @@ void AutoUpdater()
 	}
 
 	t0.close();
-	Cleanup(version, versiontxt);
+	DeleteFile(version);
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

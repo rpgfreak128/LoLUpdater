@@ -99,7 +99,7 @@ FILE* f;
 class ZoneIdentifier
 {
 public:
-	ZoneIdentifier(const wchar_t* fileName)
+	explicit ZoneIdentifier(const wchar_t* fileName)
 		: mFilename(fileName ? fileName : L"")
 	{
 		if (!fileExists(mFilename)) {
@@ -112,13 +112,13 @@ public:
 	}
 	static bool fileExists(const std::wstring& fileName)
 	{
-		DWORD attr = GetFileAttributesW(fileName.c_str());
+		auto attr = GetFileAttributesW(fileName.c_str());
 		return INVALID_FILE_ATTRIBUTES != attr && FILE_ATTRIBUTE_DIRECTORY != attr;
 	}
 	bool hasZoneID() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return fileExists(file);
 		}
@@ -127,7 +127,7 @@ public:
 	bool strip() const
 	{
 		if (validFile()) {
-			std::wstring file = mFilename;
+			auto file = mFilename;
 			file.append(unblocktag.c_str());
 			return !!DeleteFile(file.c_str());
 		}
