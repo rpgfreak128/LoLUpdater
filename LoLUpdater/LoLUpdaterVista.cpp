@@ -10,9 +10,6 @@ extern "C" int isAvxSupported();
 #include <Msi.h>
 #include <atomic>
 #include <versionhelpers.h>
-#include <iostream>
-
-
 
 class LimitSingleInstance
 {
