@@ -326,10 +326,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				throw std::runtime_error("failed to combine Url");
 
 			downloadFile(finalurl, runmsvc);
-			SHELLEXECUTEINFO ei;
-			ei.cbSize = sizeof(SHELLEXECUTEINFO);
-			ei.fMask = SEE_MASK_NOCLOSEPROCESS;
-			ei.nShow = SW_SHOW;
+
 			ei.lpParameters = L"/q /norestart";
 			ei.lpFile = runmsvc;
 
@@ -744,6 +741,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	PCombine(cgGLdest, gameclient, cgGL);
 	PCombine(cgD3D9dest, gameclient, cgD3D9);
 	PCombine(tbb, gameclient, tbbfile);
+
+	ei.cbSize = sizeof(SHELLEXECUTEINFO);
+	ei.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ei.nShow = SW_SHOW;
+
 
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
