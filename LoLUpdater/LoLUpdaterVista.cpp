@@ -9,10 +9,8 @@
 #include <sstream>
 #include <Msi.h>
 #include <atomic>
-#include <stdio.h>
-#include <intrin.h>
 #include <versionhelpers.h>
-
+#include <iostream>
 
 class LimitSingleInstance
 {
@@ -265,47 +263,89 @@ void Launch()
 
 void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring const& SSE2)
 {
-	bool can_use_intel_core_4th_gen_features = TRUE;
-	int abcd[4];
-	run_cpuid(1, 0, abcd);
+	if (IsWindows7OrGreater())
+	{
+		std::wstring input;
+		std::wcin >> input;
+		std::wofstream out("IsWin7.txt");
+		out << input;
+		out.close();
+		bool can_use_intel_core_4th_gen_features = TRUE;
+		int abcd[4];
+		run_cpuid(1, 0, abcd);
+		std::wstring input1;
+		std::wcin >> input1;
+		std::wofstream out1("CanrunCPUID.txt");
+		out1 << input1;
+		out1.close();
+		const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
+		const int check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
 
-	const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
-	const auto check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
-	if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	run_cpuid(7, 0, abcd);
-	const uint32_t avx2_bmi12_mask = 1 << 5 | 1 << 3 | 1 << 8;
-	if ((abcd[1] & avx2_bmi12_mask) != avx2_bmi12_mask)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	run_cpuid(0x80000001, 0, abcd);
-	if ((abcd[2] & 1 << 5) == 0)
-	{
-		can_use_intel_core_4th_gen_features = FALSE;
-	}
-
-	if (can_use_intel_core_4th_gen_features)
-	{
-		ExtractResource(AVX2, tbb);
-	}
-	else
-	{
-		int cpuInfo[4];
-		__cpuid(cpuInfo, 1);
-		if ((cpuInfo[2] & 1 << 27 || false) && (cpuInfo[2] & 1 << 28 || false) && check_xcr0_ymm)
+		if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask || !check_xcr0_ymm)
 		{
-			ExtractResource(AVX, tbb);
+			can_use_intel_core_4th_gen_features = FALSE;
+		}
+
+		std::wstring input2;
+		std::wcin >> input2;
+		std::wofstream out2("Check1.txt");
+		out2 << input2;
+		out2.close();
+		run_cpuid(7, 0, abcd);
+		const uint32_t avx2_bmi12_mask = 1 << 5 | 1 << 3 | 1 << 8;
+		if ((abcd[1] & avx2_bmi12_mask) != avx2_bmi12_mask)
+		{
+			can_use_intel_core_4th_gen_features = FALSE;
+		}
+		std::wstring input3;
+		std::wcin >> input3;
+		std::wofstream out3("Check2.txt");
+		out3 << input3;
+		out3.close();
+		run_cpuid(0x80000001, 0, abcd);
+		if ((abcd[2] & 1 << 5) == 0)
+		{
+			can_use_intel_core_4th_gen_features = FALSE;
+		}
+		std::wstring input4;
+		std::wcin >> input4;
+		std::wofstream out4("Check3.txt");
+		out4 << input4;
+		out4.close();
+		if (can_use_intel_core_4th_gen_features)
+		{
+			ExtractResource(AVX2, tbb);
 		}
 		else
 		{
-			ExtractResource(SSE2, tbb);
+			std::wstring input5;
+			std::wcin >> input5;
+			std::wofstream out5("GoestoElse.txt");
+			out5 << input5;
+			out5.close();
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			if ((cpuInfo[2] & 1 << 27 || false) && (cpuInfo[2] & 1 << 28 || false) && check_xcr0_ymm)
+			{
+
+				ExtractResource(AVX, tbb);
+			}
+			else
+			{
+				std::wstring input6;
+				std::wcin >> input6;
+				std::wofstream out6("IsSSE2.txt");
+				out6 << input6;
+				out6.close();
+				ExtractResource(SSE2, tbb);
+			}
 		}
 	}
+	else
+	{
+		ExtractResource(SSE2, tbb);
+	}
+
 }
 
 LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
