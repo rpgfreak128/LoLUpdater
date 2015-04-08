@@ -38,7 +38,9 @@ END
 // RCDATA
 //
 
-X1                      RCDATA                  "Cg-3.1_April2012_Setup.exe"
+Xa1                      RCDATA                  "x86\\cg.dll"
+Xa2                      RCDATA                  "x86\\cgGL.dll"
+Xa3                    RCDATA                  "x86\\cgD3D9.dll"
 
 X2                      RCDATA                  "x86\\msvcp120.dll"
 X3                      RCDATA                  "x86\\msvcr120.dll"
@@ -63,6 +65,10 @@ X000                    RCDATA                  "x64\\XP.dll"
 X00                     RCDATA                  "x64\\Vista.dll"
 X01                     RCDATA                  "x64\\Win7.dll"
 X02                     RCDATA                  "x64\\Win8.dll"
+
+Xb1                      RCDATA                  "x64\\cg.dll"
+Xb2                      RCDATA                  "x64\\cgGL.dll"
+Xb3                      RCDATA                  "x64\\cgD3D9.dll"
 
 X101                    RCDATA                  "Uninstall\\Adobe AIR.dll"
 X501                    RCDATA                  "Uninstall\\msvcp120.dll"

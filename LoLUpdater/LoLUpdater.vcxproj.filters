@@ -34,7 +34,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cg-3.1_April2012_Setup.exe" />
     <None Include="Uninstall\Adobe AIR.dll">
       <Filter>Uninstall</Filter>
     </None>
@@ -119,11 +118,29 @@
     <None Include="x86\NPSWF32.dll">
       <Filter>x86</Filter>
     </None>
+    <None Include="x86\cgD3D9.dll">
+      <Filter>x86</Filter>
+    </None>
+    <None Include="x86\cgGL.dll">
+      <Filter>x86</Filter>
+    </None>
+    <None Include="x86\cg.dll">
+      <Filter>x86</Filter>
+    </None>
+    <None Include="LoLUpdater.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="x64\cg.dll">
+      <Filter>x64</Filter>
+    </None>
+    <None Include="x64\cgD3D9.dll">
+      <Filter>x64</Filter>
+    </None>
+    <None Include="x64\cgGL.dll">
+      <Filter>x64</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoLUpdater.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LoLUpdaterVista64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
