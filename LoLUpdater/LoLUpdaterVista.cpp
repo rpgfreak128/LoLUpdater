@@ -102,7 +102,7 @@ FILE* f;
 class ZoneIdentifier
 {
 public:
-	ZoneIdentifier(const wchar_t* fileName)
+	explicit ZoneIdentifier(const wchar_t* fileName)
 		: mFilename(fileName ? fileName : L"")
 	{
 		if (!fileExists(mFilename)) {
