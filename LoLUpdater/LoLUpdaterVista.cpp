@@ -281,10 +281,13 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 		const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
 		std::wstring inputa;
 		std::wcin >> inputa;
+		std::wofstream outa("const uint32-1.txt");
 		outa << inputa;
 		outa.close();
+		const uint32_t check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
 		std::wstring inputb;
 		std::wcin >> inputb;
+		std::wofstream outb("const uint32-2.txt");
 		outb << inputb;
 		outb.close();
 		if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
