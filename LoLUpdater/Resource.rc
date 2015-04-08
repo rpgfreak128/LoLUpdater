@@ -66,10 +66,6 @@ X00                     RCDATA                  "x64\\Vista.dll"
 X01                     RCDATA                  "x64\\Win7.dll"
 X02                     RCDATA                  "x64\\Win8.dll"
 
-Xb1                      RCDATA                  "x64\\cg.dll"
-Xb2                      RCDATA                  "x64\\cgGL.dll"
-Xb3                      RCDATA                  "x64\\cgD3D9.dll"
-
 X101                    RCDATA                  "Uninstall\\Adobe AIR.dll"
 X501                    RCDATA                  "Uninstall\\msvcp120.dll"
 X601                    RCDATA                  "Uninstall\\msvcr120.dll"
@@ -93,8 +89,8 @@ MAINICON                ICON                    "..\\icon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,1,4,1
- PRODUCTVERSION 1,1,4,1
+ FILEVERSION 1,1,4,2
+ PRODUCTVERSION 1,1,4,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -111,12 +107,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "http://lolupdater.com"
             VALUE "FileDescription", "LoLUpdater Beta - A tweak for League of Legends"
-            VALUE "FileVersion", "1.1.4.1"
+            VALUE "FileVersion", "1.1.4.2"
             VALUE "InternalName", "LoLUpdater.exe"
             VALUE "LegalCopyright", "Copyright (C) 2014-2015 Elias Gudsson"
             VALUE "OriginalFilename", "LoLUpdater.exe"
             VALUE "ProductName", "LoLUpdater"
-            VALUE "ProductVersion", "1.1.4.1"
+            VALUE "ProductVersion", "1.1.4.2"
         END
     END
     BLOCK "VarFileInfo"

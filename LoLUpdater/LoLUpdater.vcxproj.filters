@@ -46,36 +46,6 @@
     <None Include="Uninstall\NPSWF32.dll">
       <Filter>Uninstall</Filter>
     </None>
-    <None Include="x86\AVX2-Win7.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\AVX2-Win8.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\AVX-Win7.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\AVX-Win8.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\msvcp120.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\msvcr120.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\SSE2-Win7.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\SSE2-Win8.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\Vista.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\XP.dll">
-      <Filter>x86</Filter>
-    </None>
     <None Include="x64\msvcp120.dll">
       <Filter>x64</Filter>
     </None>
@@ -91,20 +61,11 @@
     <None Include="x64\Vista.dll">
       <Filter>x64</Filter>
     </None>
-    <None Include="x64\XP.dll">
-      <Filter>x64</Filter>
-    </None>
     <None Include="x64\msvcp110.dll">
       <Filter>x64</Filter>
     </None>
     <None Include="x64\msvcr110.dll">
       <Filter>x64</Filter>
-    </None>
-    <None Include="x86\msvcp110.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\msvcr110.dll">
-      <Filter>x86</Filter>
     </None>
     <None Include="Uninstall\msvcp110.dll">
       <Filter>Uninstall</Filter>
@@ -118,26 +79,8 @@
     <None Include="x86\NPSWF32.dll">
       <Filter>x86</Filter>
     </None>
-    <None Include="x86\cgD3D9.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\cgGL.dll">
-      <Filter>x86</Filter>
-    </None>
-    <None Include="x86\cg.dll">
-      <Filter>x86</Filter>
-    </None>
     <None Include="LoLUpdater.cpp">
       <Filter>Source Files</Filter>
-    </None>
-    <None Include="x64\cg.dll">
-      <Filter>x64</Filter>
-    </None>
-    <None Include="x64\cgD3D9.dll">
-      <Filter>x64</Filter>
-    </None>
-    <None Include="x64\cgGL.dll">
-      <Filter>x64</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -152,5 +95,55 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="x86\cg.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\cgD3D9.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\cgGL.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x64\XP.dll">
+      <Filter>x64</Filter>
+    </Resource>
+    <Resource Include="x86\AVX2-Win7.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\AVX2-Win8.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\AVX-Win7.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\AVX-Win8.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\msvcp110.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\msvcr110.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\msvcp120.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\msvcr120.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\SSE2-Win7.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\SSE2-Win8.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\Vista.dll">
+      <Filter>x86</Filter>
+    </Resource>
+    <Resource Include="x86\XP.dll">
+      <Filter>x86</Filter>
+    </Resource>
   </ItemGroup>
 </Project>

@@ -323,9 +323,9 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 
 		ExtractResource(L"xfff", flashdest);
 
-		ExtractResource(L"xb1", cgdest);
-		ExtractResource(L"xb2", cgGLdest);
-		ExtractResource(L"xb3", cgD3D9dest);
+		ExtractResource(L"xa1", cgdest);
+		ExtractResource(L"xa2", cgGLdest);
+		ExtractResource(L"xa3", cgD3D9dest);
 
 		ExtractResource(L"x666", airdest);
 

@@ -399,9 +399,6 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				ExtractResource(L"x02", tbb);
 				break;
 			}
-			ExtractResource(L"xb1", cgdest);
-			ExtractResource(L"xb2", cgGLdest);
-			ExtractResource(L"xb3", cgD3D9dest);
 		}
 		else
 		{
@@ -428,12 +425,11 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 				SIMDCheck(L"x5", L"x8", L"x11");
 				break;
 			}
-			ExtractResource(L"xa1", cgdest);
-			ExtractResource(L"xa2", cgGLdest);
-			ExtractResource(L"xa3", cgD3D9dest);
 		}
+		ExtractResource(L"xa1", cgdest);
+		ExtractResource(L"xa2", cgGLdest);
+		ExtractResource(L"xa3", cgD3D9dest);
 		ExtractResource(L"xfff", flashdest);
-
 		ExtractResource(L"x666", airdest);
 
   	    SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
