@@ -70,9 +70,6 @@
     <None Include="x86\NPSWF32.dll">
       <Filter>x86</Filter>
     </None>
-    <None Include="LoLUpdater.cpp">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="x64\Vista.dll">
       <Filter>x64</Filter>
     </None>
@@ -136,6 +133,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoLUpdaterVista.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoLUpdater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
