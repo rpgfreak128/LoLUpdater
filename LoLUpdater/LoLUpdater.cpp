@@ -329,6 +329,17 @@ void Cleanup(const std::wstring& file1, const std::wstring& file2)
 	}
 }
 
+void Launch()
+{
+	if (std::wifstream(instdir).good())
+	{
+		ei.lpFile = instdir;
+
+		if (!ShellExecuteEx(&ei))
+			throw std::runtime_error("failed to execute the executable");
+	}
+}
+
 LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
@@ -459,13 +470,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
   	    SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
 		EnableWindow(hwndButton, FALSE);
 
-if(std::wifstream(instdir).good())
-{
-ei.lpFile = instdir;
-
-if (!ShellExecuteEx(&ei))
-	throw std::runtime_error("failed to execute the executable");
-}
+		Launch();
 
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
@@ -490,6 +495,7 @@ LRESULT CALLBACK ButtonProc2(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		DeleteFile(tbb);
 		EnableWindow(hwndButton2, FALSE);
 		SendMessage(hwndButton2, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
+		Launch();
 		break;
 	}
 	return CallWindowProc(OldButtonProc2, hwndButton2, msg, wp, lp);

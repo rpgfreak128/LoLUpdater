@@ -243,6 +243,16 @@ void msvccopy(std::wstring const& MSVCP, std::wstring const& MSVCR, std::wstring
 
 }
 
+void Launch()
+{
+	if (std::wifstream(instdir).good())
+	{
+		ei.lpFile = instdir;
+
+		if (!ShellExecuteEx(&ei))
+			throw std::runtime_error("failed to execute the executable");
+	}
+}
 
 void RunAndWait(const std::wstring& lpParameters, const std::wstring& lpFile)
 {
@@ -347,13 +357,7 @@ LRESULT CALLBACK ButtonProc(HWND, UINT msg, WPARAM wp, LPARAM lp)
 
 		EnableWindow(hwndButton, FALSE);
 		SendMessage(hwndButton, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
-if(std::wifstream(instdir).good())
-{
-ei.lpFile = instdir;
-
-if (!ShellExecuteEx(&ei))
-	throw std::runtime_error("failed to execute the executable");
-}
+		Launch();
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
 		return 0;
@@ -378,6 +382,7 @@ LRESULT CALLBACK ButtonProc2(HWND, UINT msg, WPARAM wp, LPARAM lp)
 		DeleteFile(tbb);
 		EnableWindow(hwndButton2, FALSE);
 		SendMessage(hwndButton2, WM_SETTEXT, NULL, reinterpret_cast<LPARAM>(L"Finished!"));
+		Launch();
 		break;
 	}
 	return CallWindowProc(OldButtonProc2, hwndButton2, msg, wp, lp);
