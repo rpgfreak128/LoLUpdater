@@ -279,13 +279,18 @@ void SIMDCheck(std::wstring const& AVX2, std::wstring const& AVX, std::wstring c
 		out1 << input1;
 		out1.close();
 		const uint32_t fma_movbe_osxsave_mask = 1 << 12 | 1 << 22 | 1 << 27;
-		const int check_xcr0_ymm = (static_cast<uint32_t>(_xgetbv(0)) & 6) == 6;
-
-		if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask || !check_xcr0_ymm)
+		std::wstring inputa;
+		std::wcin >> inputa;
+		outa << inputa;
+		outa.close();
+		std::wstring inputb;
+		std::wcin >> inputb;
+		outb << inputb;
+		outb.close();
+		if ((abcd[2] & fma_movbe_osxsave_mask) != fma_movbe_osxsave_mask | !check_xcr0_ymm)
 		{
 			can_use_intel_core_4th_gen_features = FALSE;
 		}
-
 		std::wstring input2;
 		std::wcin >> input2;
 		std::wofstream out2("Check1.txt");
