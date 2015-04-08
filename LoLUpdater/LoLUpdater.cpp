@@ -139,6 +139,8 @@ MSG Msg;
 
 FILE* f;
 
+ZoneIdentifier id;
+
 OSVERSIONINFO osvi{ sizeof(OSVERSIONINFO) };
 
 bool StandardLoL()
@@ -160,7 +162,7 @@ void PAppend(PWSTR pszPath, std::wstring const& pszMore)
 
 void UnblockFile(std::wstring const& filename)
 {
-	ZoneIdentifier id(filename.c_str());
+	id = filename.c_str();
 	if (id.hasZoneID())
 	{
 		id.strip();

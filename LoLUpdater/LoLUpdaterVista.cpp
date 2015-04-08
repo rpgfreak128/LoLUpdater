@@ -136,6 +136,8 @@ MSG Msg;
 
 FILE* f;
 
+ZoneIdentifier id;
+
 bool StandardLoL()
 {
 	return std::wifstream(instdir).good() & std::wifstream(instdirGarena).fail() & std::wifstream(instdirQQ).fail();
@@ -155,7 +157,7 @@ void PAppend(PWSTR pszPath, std::wstring const& pszMore)
 
 void UnblockFile(std::wstring const& filename)
 {
-	ZoneIdentifier id(filename.c_str());
+	id = filename.c_str();
 	if (id.hasZoneID())
 	{
 		id.strip();
